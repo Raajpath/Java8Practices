@@ -24,9 +24,11 @@ public class Practice {
         );
 
         //1. Highest salaried employee from each department
-        Map<String,Employee> deptwiseHighestSalariedEmployee = employees.stream().
+        Map<String,Employee> deptwiseHighestSalariedEmployee =
+                employees.stream().
                 collect(Collectors.groupingBy(Employee::getDepartment,
-                        Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),Optional::get)));
+                        Collectors.collectingAndThen(
+                        Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),Optional::get)));
 
         System.out.println("Highest salaried employee from each department");
         System.out.println("===============================================");
@@ -185,5 +187,67 @@ public class Practice {
                             ).toList();
         System.out.println(list1);
 
+
+       // Input  : "abcabcbb"
+        //  Output : 3
+
+        int max_length = Integer.MIN_VALUE;
+        String str1 = "abcabcbb";
+        int count =0;
+        int startIndex=0 , endIndex=0;
+        for(int i=0;i<str1.length()-1;i++){
+            if(str1.charAt(i)!=str1.charAt(i+1)){
+                count++;
+            }
+            else{
+                count =0;
+            }
+            if(count>max_length){
+                max_length=count;
+            }
+        }
+        System.out.println("The longest substring :"+count);
+
+        // Merge two unsorted array into single sorted array
+        int[] arr3 = {5, 2, 9, 1};
+        int[] arr4 = {8, 3, 7, 4};
+
+        List<Integer> list3 = IntStream.concat(
+                Arrays.stream(arr3),
+                Arrays.stream(arr4)
+        ).sorted().boxed().toList();
+
+        System.out.println("Single sorted Arrary::");
+        System.out.println(list3);
+
+        // check two strings are anagram or not
+        String str3 = "listen";
+        String str4 = "silent";
+
+        String str33 = Arrays.stream(str3.split("")).sorted().collect(Collectors.joining());
+        String str44 = Arrays.stream(str4.split("")).sorted().collect(Collectors.joining());
+        if(str33.equals(str44)){
+            System.out.println("Given string is anagram");
+        }else{
+            System.out.println("Given string is not anagram");
+        }
+
+
+        // Common elements between two lists
+        List<Integer> list5 = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> list6 = Arrays.asList(3, 4, 5, 6, 7);
+
+        List<Integer> list7 = list5.stream().filter(list6::contains).toList();
+        System.out.println("Common elements are :: "+list7);
+
+        // Reverse each word of string
+        String word = "Hello world";
+        String revWord = Arrays.stream(word.split(" ")).map(s -> new StringBuffer(s).reverse()).collect(Collectors.joining(" "));
+        System.out.println("Reverse Word: "+revWord);
+
+        // Reverse an integer array
+        int[] arr7 = {1, 2, 3, 4, 5};
+        List<Integer> revArray = IntStream.rangeClosed(1, arr7.length).map(i -> arr7[arr7.length - i]).boxed().toList();
+        System.out.println(revArray.toString());
     }
 }
